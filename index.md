@@ -35,6 +35,7 @@ static int[] reversed(int[] arr) {
 ```
 
 Code without bug:
+```
 static int[] reversed(int[] arr) {
     int[] newArray = new int[arr.length];
     for(int i = 0; i < arr.length; i += 1) {
@@ -42,6 +43,7 @@ static int[] reversed(int[] arr) {
     }
     return newArray;
   }
+ ```
  
 The fix addresses this issue because arr and newArray need to be switched so that newArray[i] = arr[arr.length - i - 1] and not the other way around (arr[i] = newArray[arr.length - i - 1]).
 
