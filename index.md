@@ -1,4 +1,6 @@
-Part 2:
+# Lab Report 2
+
+## Part 2:
 
 
 
@@ -43,5 +45,5 @@ static int[] reversed(int[] arr) {
  
 The fix addresses this issue because arr and newArray need to be switched so that newArray[i] = arr[arr.length - i - 1] and not the other way around (arr[i] = newArray[arr.length - i - 1]).
 
-Part 3:
+## Part 3:
 Something that I learned fromlab in week 2 is how to work build and run a server and work with code that corresponds to it. I learned about how the The URLHandler Interface works as well as what ports are and what the localhost is.  
