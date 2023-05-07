@@ -37,18 +37,15 @@ class StringHandler implements URLHandler {
 ```
 
 ![Image](Screen Shot 2023-05-07 at 2.33.59 PM.png)
-![Image](Screen Shot 2023-05-07 at 2.33.59 PM.png)
 - The methods in my code that are called are handleRequest and main method. 
 - The relevant parameter for handleRequest is url which takes in an argument in the form of /add-message?s=<string>. In this case, the relevant argument would be "Hello" (without the quotes). Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the argument that path is set equal to is "Hello".
 - The value of the field this.path changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "Hello", so this.lines field will chaneg accordingly.
 
 ![Image](Screen Shot 2023-05-07 at 2.34.08 PM.png)
-![Image](Screen Shot 2023-05-07 at 2.34.08 PM.png)
 - The methods in my code that are called are handleRequest and the main method. 
 - The relevant parameter for handleRequest is url which takes in an argument in the form of /add-message?s=<string>. In this case, the relevant argument would be "How are you" (without the quotes). Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the argument that path is set equal to is "How are you".
 - The value of the field this.path changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "How are you", so this.lines field will chaneg accordingly.
  
-![Image](Screen Shot 2023-05-07 at 2.34.16 PM.png)
 ![Image](Screen Shot 2023-05-07 at 2.34.16 PM.png)
 
 
