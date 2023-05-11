@@ -2,6 +2,8 @@
 ## Part 1:
 
 Code:
+
+In StringServer.java file:
 ```
 import java.io.IOException;
 import java.net.URI;
@@ -52,15 +54,70 @@ class StringServer {
 }
 ```
 
+In Server.java file:
+```
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.InetAddress;
+import java.net.URI;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+interface URLHandler {
+    String handleRequest(URI url) throws Exception;
+}
+
+class ServerHttpHandler implements HttpHandler {
+    URLHandler handler;
+    ServerHttpHandler(URLHandler handler) {
+      this.handler = handler;
+    }
+    public void handle(final HttpExchange exchange) throws IOException {
+        // form return body after being handled by program
+        try {
+            String ret = handler.handleRequest(exchange.getRequestURI());
+            // form the return string and write it on the browser
+            exchange.sendResponseHeaders(200, ret.getBytes().length);
+            OutputStream os = exchange.getResponseBody();
+            os.write(ret.getBytes());
+            os.close();
+        } catch(Exception e) {
+            String response = e.toString();
+            exchange.sendResponseHeaders(500, response.getBytes().length);
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+}
+
+public class Server {
+    public static void start(int port, URLHandler handler) throws IOException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+
+        //create request entrypoint
+        server.createContext("/", new ServerHttpHandler(handler));
+
+        //start the server
+        server.start();
+        System.out.println("Server started at http://" + InetAddress.getLocalHost().getHostName() + ":" + port);
+        System.out.println("(Or, if it's running locally on this computer, use http://localhost:" + port + " )");
+    }
+}
+```
+
 ![Image](Screen Shot 2023-05-07 at 2.33.59 PM.png)
-- The methods in my code that are called are handleRequest and main method. 
-- The relevant parameter for handleRequest is url which takes in an argument in the form of /add-message?s="string". In this case, the relevant argument would be "Hello" (without the quotes). Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the argument that path is set equal to is "Hello".
-- The value of the field this.path changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "Hello", so this.lines field will chaneg accordingly.
+- The methods in my code that are called are handleRequest and main method in StringServer.java. 
+- The main method takes in the port number and text file as arguments. The relevant argument that handleRequest takes in is in the form URI url where the relevant argument/value would be http://localhost:1025/add-message?s="string" where "Hello" (without the quotes) is the string. Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the value that path is set equal to is "Hello".
+- The field this.path changes based on how the value changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "Hello", so this.lines field will change accordingly.
 
 ![Image](Screen Shot 2023-05-07 at 2.34.08 PM.png)
-- The methods in my code that are called are handleRequest and the main method. 
-- The relevant parameter for handleRequest is url which takes in an argument in the form of /add-message?s=<string>. In this case, the relevant argument would be "How are you" (without the quotes). Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the argument that path is set equal to is "How are you".
-- The value of the field this.path changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "How are you", so this.lines field will chaneg accordingly.
+- The methods in my code that are called are handleRequest and main method in StringServer.java. 
+- The main method takes in the port number and text file as arguments. The relevant argument that handleRequest takes in is in the form URI url where the relevant argument/value would be http://localhost:1025/add-message?s="string" where "How are you" (without the quotes) is the string. Relevant fields of the class are this.path which is set equal to path (the parameter of the class StringHandler) and this.lines which is set equal to Files.readAllLines(Paths.get(path)). In this case, the value that path is set equal to is "How are you".
+- The field this.path changes based on the argument given to the class StringHandler. The value of the field this.lines changes based on how the path field changes. In this case, the this.path field is set equal to the argument "How are you", so this.lines field will change accordingly.
  
 ![Image](Screen Shot 2023-05-07 at 2.34.16 PM.png)
 
